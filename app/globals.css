@@ -1,26 +1,165 @@
+@import "@fontsource/inter/index.css";
+@import "@fontsource/playfair-display/index.css";
+@import "@fontsource/jetbrains-mono/index.css";
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #f5f0e8;
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --color-black: #0a0a0a;
+  --color-ivory: #f5f0e8;
+  --color-gold: #c9a96e;
+  --color-slate: #171717;
+  --color-slate-soft: #2a2a2a;
+  --color-blood: #8b1a1a;
+  --grid-line: rgb(245 240 232 / 0.08);
+  --card-line: rgb(245 240 232 / 0.12);
+  --hero-glow: radial-gradient(circle at top, rgb(201 169 110 / 0.18), transparent 38%);
+  --page-gradient: linear-gradient(180deg, rgb(245 240 232 / 0.035), transparent 22%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-black: var(--color-black);
+  --color-ivory: var(--color-ivory);
+  --color-gold: var(--color-gold);
+  --color-slate: var(--color-slate);
+  --color-slate-soft: var(--color-slate-soft);
+  --color-blood: var(--color-blood);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  min-width: 0;
+}
+
+html {
+  background:
+    var(--hero-glow),
+    var(--page-gradient),
+    var(--background);
+  color: var(--foreground);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: var(--font-inter), sans-serif;
+  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(255 255 255 / 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(201 169 110 / 0.42);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility editorial-shell {
+  @apply relative overflow-hidden bg-black text-ivory;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: clamp(40px, 5vw, 72px) clamp(40px, 5vw, 72px);
+}
+
+@utility section-frame {
+  @apply relative border-t border-ivory/10;
+}
+
+@utility story-card {
+  @apply relative overflow-hidden border border-ivory/12 bg-slate;
+}
+
+@utility label-mono {
+  @apply font-mono text-[0.68rem] uppercase tracking-[0.38em] text-ivory/58;
+}
+
+.story-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 20%, rgb(10 10 10 / 0.88) 88%),
+    linear-gradient(90deg, rgb(10 10 10 / 0.52), transparent 55%);
+}
+
+.mask-fade-bottom {
+  mask-image: linear-gradient(180deg, black 65%, transparent);
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.drop-cap > p:first-child::first-letter {
+  float: left;
+  margin-right: 0.16em;
+  font-family: var(--font-playfair), serif;
+  font-size: 4.4rem;
+  line-height: 0.86;
+  color: var(--color-gold);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

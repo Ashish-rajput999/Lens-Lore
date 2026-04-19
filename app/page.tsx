@@ -1,65 +1,57 @@
-import Image from "next/image";
+import { ArticleGrid } from "@/components/magazine/ArticleGrid";
+import { HeroSection } from "@/components/magazine/HeroSection";
+import { IssueStrip } from "@/components/magazine/IssueStrip";
+import { MarqueeStrip } from "@/components/ui/MarqueeStrip";
+import { PageWrapper } from "@/components/layout/PageWrapper";
+import { archiveStories, featuredStory, marqueeItems, monthlyIssue, topStories } from "@/lib/site-data";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <PageWrapper>
+      <HeroSection story={featuredStory} />
+      <ArticleGrid stories={topStories} archiveStories={archiveStories} />
+      <IssueStrip issue={monthlyIssue} />
+      <MarqueeStrip items={marqueeItems} />
+
+      <section className="border-t border-ivory/10 bg-black px-5 py-24 sm:px-8 lg:px-12">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="space-y-5">
+            <p className="font-mono text-xs uppercase tracking-[0.4em] text-gold">
+              Newsletter
+            </p>
+            <h2 className="max-w-3xl font-display text-5xl leading-[0.95] text-ivory sm:text-6xl">
+              Dispatches from the curb, the darkroom, and the gear bag.
+            </h2>
+            <p className="max-w-xl text-base leading-8 text-ivory/68">
+              Weekly notes on cameras that earn their scuffs, photo books worth
+              hunting down, and the stories behind the streets that shape the
+              image.
+            </p>
+          </div>
+
+          <form className="grid gap-4 self-end">
+            <label className="sr-only" htmlFor="newsletter-email">
+              Email address
+            </label>
+            <div className="group relative overflow-hidden border border-ivory/18 bg-slate px-5 py-5 transition-colors duration-500 focus-within:border-gold hover:border-ivory/40">
+              <input
+                id="newsletter-email"
+                type="email"
+                placeholder="Your email address"
+                className="w-full bg-transparent font-sans text-base tracking-[0.02em] text-ivory outline-none placeholder:text-ivory/36"
+              />
+              <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gold transition-transform duration-500 group-focus-within:scale-x-100" />
+            </div>
+            <button
+              type="submit"
+              className="inline-flex items-center justify-between border border-blood px-5 py-4 font-mono text-xs uppercase tracking-[0.35em] text-ivory transition-colors duration-300 hover:bg-blood"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Subscribe
+              <span>01</span>
+            </button>
+          </form>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </PageWrapper>
   );
 }
