@@ -1,51 +1,13 @@
 {
   "name": "lens-and-lore",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "sanity:dev": "sanity dev",
-    "sanity:deploy": "sanity deploy"
-  },
-  "dependencies": {
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@dnd-kit/utilities": "^3.2.2",
-    "@fontsource/inter": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
-    "@fontsource/playfair-display": "^5.2.8",
-    "@portabletext/react": "^6.0.3",
-    "@sanity/client": "^6.28.3",
-    "@sanity/image-url": "^2.1.1",
-    "@stripe/react-stripe-js": "^6.2.0",
-    "@stripe/stripe-js": "^9.2.0",
-    "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.103.3",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.38.0",
-    "lucide-react": "^1.8.0",
-    "next": "^14.2.33",
-    "next-sanity": "^8.5.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sanity": "^3.99.0",
-    "satori": "^0.26.0",
-    "stripe": "^22.0.2",
-    "styled-components": "^6.1.15",
-    "tailwind-merge": "^3.5.0",
-    "zustand": "^5.0.12"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.33",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "lint:frontend": "npm run lint --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "build:backend": "npm run build --prefix backend",
+    "start:backend": "npm run start --prefix backend",
+    "lint:backend": "npm run lint --prefix backend"
   }
 }
