@@ -4,14 +4,8 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-motion";
 import { Menu, ShoppingBag, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { navLinks } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
-
-const links = [
-  { label: "Stories", href: "/stories" },
-  { label: "Shop", href: "/shop" },
-  { label: "Issues", href: "/issue/01" },
-  { label: "Collections", href: "/collections" },
-];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -46,7 +40,7 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {links.map((link, index) => (
+            {navLinks.map((link, index) => (
               <motion.div
                 key={link.href}
                 initial={reduceMotion ? false : { y: -12, opacity: 0 }}
@@ -64,20 +58,20 @@ export function SiteHeader() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <button
-              type="button"
+            <Link
+              href="/cart"
               className="flex h-10 w-10 items-center justify-center border border-ivory/12 text-ivory transition-colors hover:border-gold hover:text-gold"
               aria-label="Open cart"
             >
               <ShoppingBag className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/profile"
               className="flex h-10 w-10 items-center justify-center border border-ivory/12 text-ivory transition-colors hover:border-gold hover:text-gold"
               aria-label="Open profile"
             >
               <UserRound className="h-4 w-4" />
-            </button>
+            </Link>
           </div>
 
           <button
@@ -103,7 +97,7 @@ export function SiteHeader() {
             className="fixed inset-0 z-30 bg-black/96 px-5 pt-28 md:hidden"
           >
             <div className="space-y-5">
-              {links.map((link, index) => (
+              {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
                   initial={reduceMotion ? false : { y: 20, opacity: 0 }}

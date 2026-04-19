@@ -29,7 +29,7 @@ export default function Home() {
             </p>
           </div>
 
-          <form className="grid gap-4 self-end">
+          <div className="grid gap-4 self-end">
             <label className="sr-only" htmlFor="newsletter-email">
               Email address
             </label>
@@ -43,13 +43,13 @@ export default function Home() {
               <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gold transition-transform duration-500 group-focus-within:scale-x-100" />
             </div>
             <button
-              type="submit"
+              type="button"
               className="inline-flex items-center justify-between border border-blood px-5 py-4 font-mono text-xs uppercase tracking-[0.35em] text-ivory transition-colors duration-300 hover:bg-blood"
             >
               Subscribe
               <span>01</span>
             </button>
-          </form>
+          </div>
         </div>
       </section>
     </PageWrapper>
