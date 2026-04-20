@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { supabaseAdmin } from "../lib/supabase.js";
+import { getSupabaseAdmin } from "../lib/supabase.js";
 
 function mapOrderStatus(status: Stripe.Checkout.Session["payment_status"]) {
   switch (status) {
@@ -17,6 +17,7 @@ function mapOrderStatus(status: Stripe.Checkout.Session["payment_status"]) {
 export async function upsertOrderFromCheckoutSession(
   session: Stripe.Checkout.Session,
 ) {
+  const supabaseAdmin = getSupabaseAdmin();
   const userId = session.metadata?.user_id;
 
   if (!userId) {

@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "../lib/supabase.js";
+import { getSupabaseAdmin } from "../lib/supabase.js";
 import type { CanvasData, LookbookRecord } from "../types.js";
 
 type CreateLookbookInput = {
@@ -11,6 +11,7 @@ type CreateLookbookInput = {
 };
 
 export async function createLookbook(input: CreateLookbookInput) {
+  const supabaseAdmin = getSupabaseAdmin();
   const { data, error } = await supabaseAdmin
     .from("lookbooks")
     .insert({
@@ -52,6 +53,7 @@ export async function createLookbook(input: CreateLookbookInput) {
 }
 
 export async function listPublicLookbooks(limit = 12) {
+  const supabaseAdmin = getSupabaseAdmin();
   const { data, error } = await supabaseAdmin
     .from("lookbooks")
     .select("id, title, description, thumbnail_url, created_at, updated_at")

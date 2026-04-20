@@ -1,8 +1,25 @@
 import Stripe from "stripe";
-import { env } from "../config/env.js";
+import { env, requireEnv } from "../config/env.js";
 
-export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-  appInfo: {
-    name: "LENS & LORE Backend",
-  },
-});
+let stripeSingleton: Stripe | undefined;
+
+export function getStripe() {
+  if (stripeSingleton) {
+    return stripeSingleton;
+  }
+
+  stripeSingleton = new Stripe(
+    requireEnv(
+      env.STRIPE_SECRET_KEY,
+      "STRIPE_SECRET_KEY",
+      "Add it to backend/.env before using Stripe routes.",
+    ),
+    {
+      appInfo: {
+        name: "LENS & LORE Backend",
+      },
+    },
+  );
+
+  return stripeSingleton;
+}

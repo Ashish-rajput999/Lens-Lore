@@ -15,7 +15,13 @@ export function ArticleCard({ story, featured = false }: ArticleCardProps) {
       data-cursor="hover"
       className="story-card group block h-full"
     >
-      <div className="relative min-h-[360px] overflow-hidden">
+      <div
+        className={
+          featured
+            ? "relative h-full min-h-[420px] overflow-hidden lg:min-h-[740px]"
+            : "relative h-full min-h-[360px] overflow-hidden"
+        }
+      >
         <Image
           src={story.image}
           alt={story.title}
@@ -37,7 +43,7 @@ export function ArticleCard({ story, featured = false }: ArticleCardProps) {
                 className={
                   featured
                     ? "max-w-2xl font-display text-4xl leading-tight text-ivory sm:text-5xl"
-                    : "max-w-lg font-display text-3xl leading-tight text-ivory"
+                    : "max-w-lg font-display text-[2.25rem] leading-tight text-ivory"
                 }
               >
                 {story.title}

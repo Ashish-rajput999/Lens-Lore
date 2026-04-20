@@ -1,6 +1,6 @@
 import express, { Router } from "express";
-import { stripe } from "../lib/stripe.js";
-import { env } from "../config/env.js";
+import { env, requireEnv } from "../config/env.js";
+import { getStripe } from "../lib/stripe.js";
 import { upsertOrderFromCheckoutSession } from "../services/orders.js";
 
 export const webhookRouter = Router();
@@ -19,10 +19,14 @@ webhookRouter.post(
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(
+      event = getStripe().webhooks.constructEvent(
         req.body,
         signature,
-        env.STRIPE_WEBHOOK_SECRET,
+        requireEnv(
+          env.STRIPE_WEBHOOK_SECRET,
+          "STRIPE_WEBHOOK_SECRET",
+          "Add it to backend/.env before receiving Stripe webhooks.",
+        ),
       );
     } catch (error) {
       const message =

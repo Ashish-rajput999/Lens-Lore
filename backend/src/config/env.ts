@@ -7,12 +7,37 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().default(4000),
   APP_ORIGIN: z.string().url().default("http://localhost:3000"),
-  SUPABASE_URL: z.string().url(),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
-  STRIPE_SECRET_KEY: z.string().min(1),
-  STRIPE_WEBHOOK_SECRET: z.string().min(1),
-  SANITY_PROJECT_ID: z.string().min(1),
-  SANITY_DATASET: z.string().min(1),
+  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
+  STRIPE_SECRET_KEY: z.string().min(1).optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
+  SANITY_PROJECT_ID: z.string().min(1).optional(),
+  SANITY_DATASET: z.string().min(1).optional(),
 });
 
 export const env = envSchema.parse(process.env);
+
+export function requireEnv(
+  value: string | undefined,
+  key: keyof typeof env,
+  reason: string,
+) {
+  if (!value) {
+    throw new Error(`Missing ${key}. ${reason}`);
+  }
+
+  return value;
+}
+
+export function getMissingEnvKeys() {
+  const requiredKeys = [
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "SANITY_PROJECT_ID",
+    "SANITY_DATASET",
+  ] as const;
+
+  return requiredKeys.filter((key) => !env[key]);
+}

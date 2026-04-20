@@ -36,12 +36,9 @@ export function ArticleGrid({ stories, archiveStories }: ArticleGridProps) {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {archiveStories.map((story, index) => (
-              <div
-                key={story.slug}
-                className={index % 3 === 0 ? "xl:translate-y-10" : ""}
-              >
+          <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {archiveStories.map((story) => (
+              <div key={story.slug}>
                 <ArticleCard story={story} />
               </div>
             ))}

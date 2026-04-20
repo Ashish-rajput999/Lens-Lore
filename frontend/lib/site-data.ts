@@ -510,7 +510,7 @@ export const stories: Story[] = [
     slug: "repair-shops-forums",
     href: "/stories/repair-shops-forums",
     image:
-      "https://images.unsplash.com/photo-1516728778615-2d590ea18575?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=1200&q=80",
     summary:
       "There is a culture forming around patina, maintenance, and the social life of cameras that refuse to die.",
     category: "Interview",
