@@ -1,142 +1,84 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
-import { appUrl, isSupabaseConfigured } from "@/lib/supabase/config";
+import { useReaderStore } from "@/lib/store/reader-store";
+import { useShell } from "@/components/providers/ShellProvider";
 
 type AuthMode = "sign-in" | "sign-up";
 
 type AuthFormProps = {
   mode: AuthMode;
+  onSuccess?: () => void;
 };
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, onSuccess }: AuthFormProps) {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const configured = isSupabaseConfigured();
+  const signUp = useReaderStore((state) => state.signUp);
+  const signIn = useReaderStore((state) => state.signIn);
+  const { closeAuth, setAuthMode } = useShell();
   const isSignUp = mode === "sign-up";
 
-  async function handlePasswordSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setMessage(null);
-
-    const supabase = createBrowserSupabaseClient();
-
-    if (!supabase) {
-      setError("Supabase is not configured yet. Add frontend/.env values first.");
-      return;
-    }
-
     setLoading(true);
 
-    const response = isSignUp
-      ? await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${appUrl}/auth/callback`,
-          },
-        })
-      : await supabase.auth.signInWithPassword({ email, password });
+    const result = isSignUp
+      ? await signUp(email, password, name || email.split("@")[0] || "Reader")
+      : await signIn(email, password);
 
     setLoading(false);
 
-    if (response.error) {
-      setError(response.error.message);
+    if (result.error) {
+      setError(result.error);
       return;
     }
 
-    if (isSignUp) {
-      setMessage("Check your email to confirm your LENS & LORE account.");
-      return;
-    }
-
-    window.location.assign("/profile");
-  }
-
-  async function handleMagicLink() {
-    setError(null);
-    setMessage(null);
-
-    const supabase = createBrowserSupabaseClient();
-
-    if (!supabase) {
-      setError("Supabase is not configured yet. Add frontend/.env values first.");
-      return;
-    }
-
-    if (!email) {
-      setError("Enter your email first so we can send a magic link.");
-      return;
-    }
-
-    setLoading(true);
-
-    const { error: magicLinkError } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${appUrl}/auth/callback`,
-      },
-    });
-
-    setLoading(false);
-
-    if (magicLinkError) {
-      setError(magicLinkError.message);
-      return;
-    }
-
-    setMessage("Magic link sent. Check your inbox to continue.");
-  }
-
-  async function handleGoogle() {
-    setError(null);
-    setMessage(null);
-
-    const supabase = createBrowserSupabaseClient();
-
-    if (!supabase) {
-      setError("Supabase is not configured yet. Add frontend/.env values first.");
-      return;
-    }
-
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${appUrl}/auth/callback`,
-      },
-    });
+    setMessage(isSignUp ? "Welcome to the Archive." : "Welcome back.");
+    setTimeout(() => {
+      closeAuth();
+      onSuccess?.();
+    }, 900);
   }
 
   return (
     <div className="border border-ivory/12 bg-slate p-6">
-      {!configured ? (
-        <div className="mb-6 border border-gold/30 bg-gold/10 p-4">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-gold">
-            Auth Setup Needed
-          </p>
-          <p className="mt-3 text-sm leading-7 text-ivory/70">
-            Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-            to `frontend/.env` to enable real multi-user sign-up.
-          </p>
-        </div>
-      ) : null}
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        {isSignUp && (
+          <div className="space-y-2">
+            <label
+              htmlFor="auth-name"
+              className="font-mono text-[0.68rem] uppercase tracking-[0.35em] text-ivory/58"
+            >
+              Name
+            </label>
+            <input
+              id="auth-name"
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              autoComplete="name"
+              className="w-full border border-ivory/12 bg-black px-4 py-4 text-ivory outline-none transition-colors focus:border-gold"
+              placeholder="Your name"
+            />
+          </div>
+        )}
 
-      <form className="space-y-4" onSubmit={handlePasswordSubmit}>
         <div className="space-y-2">
           <label
-            htmlFor="email"
+            htmlFor="auth-email"
             className="font-mono text-[0.68rem] uppercase tracking-[0.35em] text-ivory/58"
           >
             Email
           </label>
           <input
-            id="email"
+            id="auth-email"
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -149,21 +91,21 @@ export function AuthForm({ mode }: AuthFormProps) {
 
         <div className="space-y-2">
           <label
-            htmlFor="password"
+            htmlFor="auth-password"
             className="font-mono text-[0.68rem] uppercase tracking-[0.35em] text-ivory/58"
           >
             Password
           </label>
           <input
-            id="password"
+            id="auth-password"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            minLength={8}
+            minLength={6}
             autoComplete={isSignUp ? "new-password" : "current-password"}
             className="w-full border border-ivory/12 bg-black px-4 py-4 text-ivory outline-none transition-colors focus:border-gold"
-            placeholder="Minimum 8 characters"
+            placeholder="Minimum 6 characters"
           />
         </div>
 
@@ -184,38 +126,20 @@ export function AuthForm({ mode }: AuthFormProps) {
           disabled={loading}
           className="flex w-full items-center justify-between border border-blood px-5 py-4 font-mono text-xs uppercase tracking-[0.35em] text-ivory transition-colors hover:bg-blood disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {loading ? "Working" : isSignUp ? "Create Account" : "Sign In"}
-          <span>{isSignUp ? "01" : "02"}</span>
+          {loading ? "Working…" : isSignUp ? "Create Account" : "Sign In"}
+          <span>→</span>
         </button>
       </form>
 
-      <div className="mt-4 grid gap-3">
-        <button
-          type="button"
-          onClick={handleMagicLink}
-          disabled={loading}
-          className="border border-ivory/12 px-5 py-4 font-mono text-xs uppercase tracking-[0.3em] text-ivory transition-colors hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Email Magic Link
-        </button>
-        <button
-          type="button"
-          onClick={handleGoogle}
-          disabled={loading}
-          className="border border-ivory/12 px-5 py-4 font-mono text-xs uppercase tracking-[0.3em] text-ivory transition-colors hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Continue With Google
-        </button>
-      </div>
-
       <p className="mt-6 text-sm leading-7 text-ivory/60">
         {isSignUp ? "Already have an account?" : "New here?"}{" "}
-        <Link
-          href={isSignUp ? "/sign-in" : "/sign-up"}
+        <button
+          type="button"
+          onClick={() => setAuthMode(isSignUp ? "sign-in" : "sign-up")}
           className="text-gold underline-offset-4 hover:underline"
         >
           {isSignUp ? "Sign in" : "Create your account"}
-        </Link>
+        </button>
       </p>
     </div>
   );

@@ -1,16 +1,12 @@
 "use client";
 
-import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
+import { useReaderStore } from "@/lib/store/reader-store";
 
 export function SignOutButton() {
-  async function handleSignOut() {
-    const supabase = createBrowserSupabaseClient();
+  const signOut = useReaderStore((state) => state.signOut);
 
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
-
-    window.location.assign("/sign-in");
+  function handleSignOut() {
+    signOut();
   }
 
   return (
