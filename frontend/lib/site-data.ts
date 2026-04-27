@@ -1,6 +1,9 @@
 const blurDataURL =
   "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0MCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDQwIDI0Jz48cmVjdCB3aWR0aD0nNDAnIGhlaWdodD0nMjQnIGZpbGw9JyMxMTEwMGYnLz48cmVjdCB4PScwJyB5PScxMicgd2lkdGg9JzQwJyBoZWlnaHQ9JzEyJyBmaWxsPScjMjMyMDE4Jy8+PHJlY3QgeD0nMCcgeT0nMCcgd2lkdGg9JzQwJyBoZWlnaHQ9JzYnIGZpbGw9JyMyZTFmMTcnLz48L3N2Zz4=";
 
+export const CATEGORIES = ["All", "Cameras", "Bags", "Flash", "Film", "Accessories"] as const;
+export type Category = (typeof CATEGORIES)[number];
+
 export type Product = {
   id: string;
   slug: string;
@@ -115,7 +118,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
-    category: "Camera",
+    category: "Cameras",
     description:
       "A compact street camera with a 40mm-equivalent perspective that feels composed without becoming precious.",
     tag: "As Seen In Neon After Rain",
@@ -123,6 +126,48 @@ export const products: Product[] = [
       { key: "Lens", value: "40mm equiv / f2.8" },
       { key: "Sensor", value: "24.2MP APS-C" },
       { key: "Weight", value: "262g" },
+    ],
+    featuredIn: ["neon-after-rain"],
+  },
+  {
+    id: "x100vi",
+    slug: "fujifilm-x100vi-silver",
+    name: "Fujifilm X100VI Silver",
+    brand: "Fujifilm",
+    price: 1599,
+    image:
+      "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1400&q=80",
+    category: "Cameras",
+    description:
+      "The fixed-lens rangefinder that turned a generation of phone shooters into deliberate photographers.",
+    tag: "As Seen In Contact Sheet Maps",
+    specs: [
+      { key: "Lens", value: "23mm f/2.0" },
+      { key: "Sensor", value: "40.2MP X-Trans V" },
+      { key: "Weight", value: "521g" },
+    ],
+    featuredIn: ["contact-sheet-maps"],
+  },
+  {
+    id: "leica-q3",
+    slug: "leica-q3-43",
+    name: "Leica Q3 43",
+    brand: "Leica",
+    price: 5995,
+    image:
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+    category: "Cameras",
+    description:
+      "A full-frame compact with a 43mm Summilux that renders street light with a civility most zooms cannot reach.",
+    tag: "As Seen In Neon After Rain",
+    specs: [
+      { key: "Lens", value: "43mm f/1.7 Summilux" },
+      { key: "Sensor", value: "60MP Full-Frame" },
+      { key: "Weight", value: "743g" },
     ],
     featuredIn: ["neon-after-rain"],
   },
@@ -136,7 +181,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=1400&q=80",
-    category: "Filter",
+    category: "Accessories",
     description:
       "A restrained diffusion filter that blooms harsh signage and headlights without turning the frame to mush.",
     tag: "As Seen In Neon After Rain",
@@ -157,7 +202,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1400&q=80",
-    category: "Bag",
+    category: "Bags",
     description:
       "A weatherproof sling with soft structure and quiet hardware that disappears into a long day on foot.",
     tag: "As Seen In Invisible Shoulder Bag",
@@ -165,6 +210,48 @@ export const products: Product[] = [
       { key: "Capacity", value: "6L" },
       { key: "Fabric", value: "Recycled woven shell" },
       { key: "Carry", value: "Crossbody" },
+    ],
+    featuredIn: ["invisible-shoulder-bag"],
+  },
+  {
+    id: "peak-sling",
+    slug: "peak-design-everyday-sling-3l",
+    name: "Peak Design Everyday Sling 3L",
+    brand: "Peak Design",
+    price: 99,
+    image:
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?auto=format&fit=crop&w=1400&q=80",
+    category: "Bags",
+    description:
+      "A minimal sling that forces you to choose only what matters — one body, one lens, no excuses.",
+    tag: "As Seen In Invisible Shoulder Bag",
+    specs: [
+      { key: "Capacity", value: "3L" },
+      { key: "Fabric", value: "Recycled 400D nylon" },
+      { key: "Carry", value: "Sling / Crossbody" },
+    ],
+    featuredIn: ["invisible-shoulder-bag"],
+  },
+  {
+    id: "wotancraft",
+    slug: "wotancraft-trooper-messenger",
+    name: "Wotancraft Trooper Messenger",
+    brand: "Wotancraft",
+    price: 329,
+    image:
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1400&q=80",
+    category: "Bags",
+    description:
+      "Waxed canvas and full-grain leather build a messenger that ages with intention, not neglect.",
+    tag: "As Seen In Invisible Shoulder Bag",
+    specs: [
+      { key: "Capacity", value: "10L" },
+      { key: "Fabric", value: "Waxed canvas + leather" },
+      { key: "Carry", value: "Messenger / Shoulder" },
     ],
     featuredIn: ["invisible-shoulder-bag"],
   },
@@ -178,7 +265,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?auto=format&fit=crop&w=1400&q=80",
-    category: "Bag Accessory",
+    category: "Accessories",
     description:
       "A felt-lined divider system that adds shape without making a shoulder bag feel overdesigned.",
     tag: "As Seen In Invisible Shoulder Bag",
@@ -211,6 +298,27 @@ export const products: Product[] = [
     featuredIn: ["pocket-flash-revival"],
   },
   {
+    id: "v1-flash",
+    slug: "godox-v1-round-head-flash",
+    name: "Godox V1 Round Head Flash",
+    brand: "Godox",
+    price: 259,
+    image:
+      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1494256997604-768d1f608cac?auto=format&fit=crop&w=1400&q=80",
+    category: "Flash",
+    description:
+      "A professional round-head speedlight with magnetic modifiers — the one tool that makes hard light feel like a creative decision.",
+    tag: "As Seen In Pocket Flash Revival",
+    specs: [
+      { key: "Guide Number", value: "GN76" },
+      { key: "Recycle", value: "1.5s" },
+      { key: "Power", value: "Li-ion 2600mAh" },
+    ],
+    featuredIn: ["pocket-flash-revival"],
+  },
+  {
     id: "portra",
     slug: "kodak-portra-400",
     name: "Kodak Portra 400",
@@ -232,6 +340,27 @@ export const products: Product[] = [
     featuredIn: ["grain-feels-human", "contact-sheet-maps"],
   },
   {
+    id: "hp5",
+    slug: "ilford-hp5-plus-400",
+    name: "Ilford HP5 Plus 400",
+    brand: "Ilford",
+    price: 12,
+    image:
+      "https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1400&q=80",
+    category: "Film",
+    description:
+      "The black-and-white workhorse: pushable, forgiving, and full of the grain that makes night walks feel honest.",
+    tag: "As Seen In Grain Feels Human",
+    specs: [
+      { key: "Format", value: "35mm / 36 exp" },
+      { key: "ISO", value: "400 (push to 3200)" },
+      { key: "Look", value: "Classic B&W grain" },
+    ],
+    featuredIn: ["grain-feels-human"],
+  },
+  {
     id: "hood",
     slug: "metal-ventilated-lens-hood",
     name: "Metal Ventilated Lens Hood",
@@ -241,7 +370,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1400&q=80",
-    category: "Accessory",
+    category: "Accessories",
     description:
       "A ventilated hood that keeps flare controlled while preserving the lean silhouette of a daily-carry lens.",
     tag: "As Seen In Quiet Luxury Lens Hood",
@@ -262,7 +391,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1400&q=80",
     lifestyleImage:
       "https://images.unsplash.com/photo-1519183071298-a2962be96ea1?auto=format&fit=crop&w=1400&q=80",
-    category: "Accessory",
+    category: "Accessories",
     description:
       "Soft leather that settles quickly and makes a compact body feel secure without telegraphing itself.",
     tag: "As Seen In Repair Shops Became Forums",
@@ -270,6 +399,48 @@ export const products: Product[] = [
       { key: "Material", value: "Vegetable-tanned leather" },
       { key: "Length", value: "Adjustable" },
       { key: "Hardware", value: "Brass" },
+    ],
+    featuredIn: ["repair-shops-forums"],
+  },
+  {
+    id: "rain-cover",
+    slug: "peak-design-shell-rain-cover",
+    name: "Peak Design Shell Rain Cover",
+    brand: "Peak Design",
+    price: 45,
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=1400&q=80",
+    category: "Accessories",
+    description:
+      "A lightweight rain cover that deploys in seconds and lets you keep shooting through every downpour.",
+    tag: "As Seen In Neon After Rain",
+    specs: [
+      { key: "Material", value: "UltraLight nylon" },
+      { key: "Fit", value: "Most mirrorless bodies" },
+      { key: "Weight", value: "42g" },
+    ],
+    featuredIn: ["neon-after-rain"],
+  },
+  {
+    id: "cleaning-kit",
+    slug: "vsgo-sensor-cleaning-kit",
+    name: "VSGO Sensor Cleaning Kit",
+    brand: "VSGO",
+    price: 34,
+    image:
+      "https://images.unsplash.com/photo-1519183071298-a2962be96ea1?auto=format&fit=crop&w=1400&q=80",
+    lifestyleImage:
+      "https://images.unsplash.com/photo-1516728778615-2d590ea18575?auto=format&fit=crop&w=1400&q=80",
+    category: "Accessories",
+    description:
+      "An essential maintenance kit — sensor swabs, air blower, and lens pen for the photographer who treats their gear with respect.",
+    tag: "As Seen In Repair Shops Became Forums",
+    specs: [
+      { key: "Includes", value: "Swabs, Blower, Pen" },
+      { key: "Sensor Size", value: "APS-C / Full Frame" },
+      { key: "Use", value: "~10 cleanings" },
     ],
     featuredIn: ["repair-shops-forums"],
   },
@@ -389,7 +560,7 @@ export const stories: Story[] = [
       {
         type: "paragraph",
         content:
-          "The point is not minimalism for its own sake. It is quiet. A carry system should support the body’s patience, not compete with it.",
+          "The point is not minimalism for its own sake. It is quiet. A carry system should support the body's patience, not compete with it.",
       },
       {
         type: "photoGrid",
@@ -529,7 +700,7 @@ export const stories: Story[] = [
       {
         type: "paragraph",
         content:
-          "Repair counters have become unofficial salons for the city’s most obsessive camera carriers. The talk is half mechanics, half myth-making.",
+          "Repair counters have become unofficial salons for the city's most obsessive camera carriers. The talk is half mechanics, half myth-making.",
       },
       {
         type: "productEmbed",
@@ -675,6 +846,48 @@ export const collections: LookbookCollection[] = [
       "A compact direct-flash kit for portraits made between bars, bodegas, and train platforms.",
     productSlugs: ["godox-lux-junior-flash", "ricoh-griiix-urban-shadow", "cinebloom-10-filter"],
   },
+  {
+    id: "rainy-day-kit",
+    title: "Rainy Day Kit",
+    creator: "Maya Ito",
+    category: "Weather Gear",
+    itemCount: 4,
+    saves: 187,
+    createdAt: "April 20, 2026",
+    thumbnail:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+    description:
+      "Everything you need to keep shooting through the downpour — from rain covers to weather-sealed compacts.",
+    productSlugs: ["ricoh-griiix-urban-shadow", "peak-design-shell-rain-cover", "bellroy-venture-sling-6l", "cinebloom-10-filter"],
+  },
+  {
+    id: "monochrome-setup",
+    title: "Monochrome Setup",
+    creator: "Leah March",
+    category: "Film & B&W",
+    itemCount: 4,
+    saves: 143,
+    createdAt: "April 15, 2026",
+    thumbnail:
+      "https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1400&q=80",
+    description:
+      "A pure black-and-white kit: classic film stock, a minimal body, and the accessories that stay out of the way.",
+    productSlugs: ["ilford-hp5-plus-400", "fujifilm-x100vi-silver", "metal-ventilated-lens-hood", "leather-wrist-strap-smoke-tan"],
+  },
+  {
+    id: "travel-light",
+    title: "Travel Light",
+    creator: "Jonah Vale",
+    category: "Minimal Carry",
+    itemCount: 4,
+    saves: 231,
+    createdAt: "April 22, 2026",
+    thumbnail:
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=80",
+    description:
+      "One body, one lens, one bag. The disciplined traveler's kit that proves less gear means more photographs.",
+    productSlugs: ["fujifilm-x100vi-silver", "peak-design-everyday-sling-3l", "kodak-portra-400", "vsgo-sensor-cleaning-kit"],
+  },
 ];
 
 export const featuredStory: FeatureStory = stories[0]!;
@@ -727,4 +940,44 @@ export function getRelatedStories(slug: string) {
 
 export function getRelatedProducts(slug: string) {
   return products.filter((product) => product.slug !== slug).slice(0, 4);
+}
+
+export function getProductsByCategory(category: string): Product[] {
+  if (category === "All") return products;
+  return products.filter((product) => product.category === category);
+}
+
+export function searchAll(query: string) {
+  const q = query.toLowerCase().trim();
+  if (!q) return { stories: [], products: [], collections: [] };
+
+  const matchedStories = stories.filter(
+    (s) =>
+      s.title.toLowerCase().includes(q) ||
+      s.summary.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q) ||
+      s.author.name.toLowerCase().includes(q)
+  );
+
+  const matchedProducts = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(q) ||
+      p.brand.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+  );
+
+  const matchedCollections = collections.filter(
+    (c) =>
+      c.title.toLowerCase().includes(q) ||
+      c.description.toLowerCase().includes(q) ||
+      c.category.toLowerCase().includes(q) ||
+      c.creator.toLowerCase().includes(q)
+  );
+
+  return {
+    stories: matchedStories,
+    products: matchedProducts,
+    collections: matchedCollections,
+  };
 }
