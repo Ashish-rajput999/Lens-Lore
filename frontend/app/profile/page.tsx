@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProfileLibrarySummary } from "@/components/account/ProfileLibrarySummary";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -84,15 +85,23 @@ export default async function ProfilePage() {
               </p>
               {user ? <div className="mt-5"><SignOutButton /></div> : null}
             </div>
-            <Link href="/saved" className="border border-ivory/12 bg-black p-6 transition-colors hover:border-gold">
-              <p className="label-mono">Saved</p>
-              <p className="mt-4 font-display text-4xl text-ivory">Saved Stories</p>
-            </Link>
             <Link href="/collections" className="border border-ivory/12 bg-black p-6 transition-colors hover:border-gold">
-              <p className="label-mono">Lookbooks</p>
-              <p className="mt-4 font-display text-4xl text-ivory">Public Collections</p>
+              <p className="label-mono">Collections</p>
+              <p className="mt-4 font-display text-4xl text-ivory">Public Lookbooks</p>
+              <p className="mt-3 text-sm leading-7 text-ivory/62">
+                Browse the outward-facing side of the editorial moodboard universe.
+              </p>
+            </Link>
+            <Link href="/stories" className="border border-ivory/12 bg-black p-6 transition-colors hover:border-gold">
+              <p className="label-mono">Stories</p>
+              <p className="mt-4 font-display text-4xl text-ivory">Editorial Feed</p>
+              <p className="mt-3 text-sm leading-7 text-ivory/62">
+                Return to the magazine and continue building your archive.
+              </p>
             </Link>
           </div>
+
+          <ProfileLibrarySummary />
         </div>
       </section>
     </PageWrapper>
