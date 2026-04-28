@@ -15,7 +15,7 @@
   --color-slate: #171717;
   --color-slate-soft: #2a2a2a;
   --color-blood: #8b1a1a;
-  --grid-line: rgb(245 240 232 / 0.08);
+  --grid-line: rgb(245 240 232 / 0.1);
   --card-line: rgb(245 240 232 / 0.12);
   --hero-glow: radial-gradient(circle at top, rgb(201 169 110 / 0.18), transparent 38%);
   --page-gradient: linear-gradient(180deg, rgb(245 240 232 / 0.035), transparent 22%);
@@ -153,6 +153,37 @@ img {
   font-size: 4.4rem;
   line-height: 0.86;
   color: var(--color-gold);
+}
+
+/* Focus ring utilities */
+@utility focus-ring {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@utility focus-ring-inset {
+  outline: 2px solid var(--color-gold);
+  outline-offset: -2px;
+}
+
+/* Keyboard-only focus rings */
+:focus-visible {
+  outline: 2px solid rgb(201 169 110 / 0.7);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgb(201 169 110 / 0.7);
+  outline-offset: 2px;
+}
+
+/* Suppress focus rings for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @keyframes marquee {
