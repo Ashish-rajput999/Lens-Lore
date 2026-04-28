@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { SaveStoryButton } from "@/components/magazine/SaveStoryButton";
 import { Story } from "@/lib/site-data";
 
 type ArticleCardProps = {
@@ -22,16 +26,21 @@ export function ArticleCard({ story, featured = false }: ArticleCardProps) {
             : "relative h-full min-h-[360px] overflow-hidden"
         }
       >
-        <Image
-          src={story.image}
-          alt={story.title}
-          fill
-          sizes={featured ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
-          placeholder="blur"
-          blurDataURL={story.blurDataURL}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-        />
+        <motion.div layoutId={`story-image-${story.slug}`} className="absolute inset-0">
+          <Image
+            src={story.image}
+            alt={story.title}
+            fill
+            sizes={featured ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
+            placeholder="blur"
+            blurDataURL={story.blurDataURL}
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+        <div className="absolute right-5 top-5 z-10">
+          <SaveStoryButton storySlug={story.slug} />
+        </div>
         <div className="absolute inset-x-0 bottom-0 z-10 space-y-4 p-6 lg:p-8">
           <div className="flex flex-wrap gap-3">
             <span className="label-mono text-gold">{story.category}</span>
@@ -39,7 +48,8 @@ export function ArticleCard({ story, featured = false }: ArticleCardProps) {
           </div>
           <div className="flex items-end justify-between gap-4">
             <div className="space-y-3">
-              <h3
+              <motion.h3
+                layoutId={`story-title-${story.slug}`}
                 className={
                   featured
                     ? "max-w-2xl font-display text-4xl leading-tight text-ivory sm:text-5xl"
@@ -47,7 +57,7 @@ export function ArticleCard({ story, featured = false }: ArticleCardProps) {
                 }
               >
                 {story.title}
-              </h3>
+              </motion.h3>
               <p className="max-w-xl text-sm leading-7 text-ivory/70">
                 {story.summary}
               </p>

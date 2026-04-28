@@ -3,15 +3,21 @@ import Image from "next/image";
 import { Product } from "@/lib/site-data";
 
 type ShoppableSidebarProps = {
+  activeProductSlug?: string | null;
+  onQuickAdd?: (product: Product) => void;
   products: Product[];
 };
 
-export function ShoppableSidebar({ products }: ShoppableSidebarProps) {
+export function ShoppableSidebar({
+  products,
+  activeProductSlug,
+  onQuickAdd,
+}: ShoppableSidebarProps) {
   const total = products.reduce((sum, product) => sum + product.price, 0);
 
   return (
     <aside className="space-y-6 lg:sticky lg:top-28">
-      <div className="border border-ivory/12 bg-slate p-5">
+      <div className="border border-ivory/12 bg-black/45 p-5 backdrop-blur-2xl">
         <p className="label-mono text-gold">Shop This Story</p>
         <div className="mt-5 space-y-4">
           {products.map((product) => (
@@ -19,7 +25,11 @@ export function ShoppableSidebar({ products }: ShoppableSidebarProps) {
               key={product.slug}
               href={`/product/${product.slug}`}
               data-cursor="hover"
-              className="group grid grid-cols-[84px_1fr] gap-4 border-t border-ivory/10 pt-4 first:border-t-0 first:pt-0"
+              className={`group grid grid-cols-[84px_1fr] gap-4 border-t pt-4 first:border-t-0 first:pt-0 ${
+                activeProductSlug === product.slug
+                  ? "border-gold/45"
+                  : "border-ivory/10"
+              }`}
             >
               <div className="relative aspect-square overflow-hidden border border-ivory/12">
                 <Image
@@ -41,9 +51,22 @@ export function ShoppableSidebar({ products }: ShoppableSidebarProps) {
                   <span className="font-mono text-xs uppercase tracking-[0.25em] text-gold">
                     ${product.price}
                   </span>
-                  <span className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-ivory/60 transition-colors group-hover:text-ivory">
-                    Add to Lookbook
-                  </span>
+                  {onQuickAdd ? (
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        onQuickAdd(product);
+                      }}
+                      className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-ivory/60 transition-colors group-hover:text-ivory"
+                    >
+                      Quick Add
+                    </button>
+                  ) : (
+                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-ivory/60 transition-colors group-hover:text-ivory">
+                      Add to Lookbook
+                    </span>
+                  )}
                 </div>
               </div>
             </Link>
@@ -51,7 +74,7 @@ export function ShoppableSidebar({ products }: ShoppableSidebarProps) {
         </div>
       </div>
 
-      <div className="border border-ivory/12 bg-black p-5">
+      <div className="border border-ivory/12 bg-black/45 p-5 backdrop-blur-2xl">
         <p className="label-mono">Curated Total</p>
         <div className="mt-3 flex items-end justify-between">
           <p className="font-display text-3xl text-ivory">${total}</p>
