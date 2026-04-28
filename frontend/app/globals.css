@@ -15,7 +15,7 @@
   --color-slate: #171717;
   --color-slate-soft: #2a2a2a;
   --color-blood: #8b1a1a;
-  --grid-line: rgb(245 240 232 / 0.1);
+  --grid-line: rgb(245 240 232 / 0.03);
   --card-line: rgb(245 240 232 / 0.12);
   --hero-glow: radial-gradient(circle at top, rgb(201 169 110 / 0.18), transparent 38%);
   --page-gradient: linear-gradient(180deg, rgb(245 240 232 / 0.035), transparent 22%);
