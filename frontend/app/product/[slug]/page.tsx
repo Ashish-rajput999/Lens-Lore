@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { ProductPurchasePanel } from "@/components/commerce/ProductPurchasePanel";
 import { ArticleCard } from "@/components/magazine/ArticleCard";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { getProductBySlug, getRelatedProducts, getStoriesForProduct } from "@/lib/site-data";
@@ -55,28 +55,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            <div className="border border-ivory/12 bg-black p-6">
-              <p className="label-mono">Inline Purchase</p>
-              <div className="mt-4 space-y-4">
-                <div className="border border-ivory/12 px-4 py-4 font-mono text-xs uppercase tracking-[0.28em] text-ivory/45">
-                  Stripe Elements placeholder mounted area
-                </div>
-                <Link
-                  href="/checkout"
-                  className="flex items-center justify-between border border-blood px-4 py-4 font-mono text-xs uppercase tracking-[0.3em] text-ivory transition-colors hover:bg-blood"
-                >
-                  Proceed to Checkout
-                  <span>${product.price}</span>
-                </Link>
-                <Link
-                  href="/canvas"
-                  className="flex items-center justify-between border border-ivory/12 px-4 py-4 font-mono text-xs uppercase tracking-[0.3em] text-ivory transition-colors hover:border-gold hover:text-gold"
-                >
-                  Save to Lookbook
-                  <span>Canvas</span>
-                </Link>
-              </div>
-            </div>
+            <ProductPurchasePanel product={product} />
 
             <div className="border border-ivory/12 bg-slate p-6">
               <p className="label-mono">Specs</p>
